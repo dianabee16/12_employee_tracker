@@ -91,8 +91,121 @@ function viewAllDepartments(){
     db.query("SELECT * FROM employee", function (err, results) {
        (err) ? console.log(err) :  console.table(results), start();
     });
-    
   }
 
+
+
+  function addDepartment() {
+    inquirer
+    .prompt([
+        {
+            name: "departmentName",
+            type: "input",
+            message: "Please enter the new department name:"
+        }
+    ]).then(function (response) {
+        db.query("INSERT INTO department SET ?", {
+            departmentName: response.departmentName,
+        },
+        function (err, response){
+            console.log("New department added!");
+            viewAllDepartments();
+        })
+    })
+  }
+
+  function addRole() {
+    db.query("SELECT * FROM department", function(err, response){
+        if(err){
+            console.log(err), start()
+        }
+        const departmentList = response.map((department) => ({
+            value: department.id, 
+            name: department.dept_name,
+        }))
+        inquirer
+    .prompt([
+        {
+            name: "role",
+            type: "input",
+            message: "Please enter the new role:",
+        },
+        {
+            name: "salary",
+            type: "number",
+            message: "Please enter the salary for this role:",
+        },
+        {
+            name: "department",
+            type: "list",
+            message: "Please enter the department for this role:",
+            choices: departmentList,
+        }
+    ]).then(function (response) {
+        let roleTitle = response.role
+        let roleSalary = response.salary
+        let roleDepartment = response.department
+        db.query(`INSERT INTO role (title, salary, department_id) VALUES
+        ("${roleTitle}", "${roleSalary}", "${roleDepartment}")
+        `,function (err) {
+            if (err) throw err;
+            viewAllRoles(),
+            start();
+        })
+    })
+    })
+  };
+
+  function addEmployee() {
+    db.query("SELECT * FROM role", function(err, response){
+        if(err){
+            console.log(err)
+            start();
+            return
+        }
+        const roleList = response.map((role) => ({
+            value: role.id, 
+            name: role.title,
+
+        }))
+   
+    inquirer
+    .prompt([
+        {
+            name: "employeeFirstName",
+            type: "input",
+            message: "Please enter employee's first name:"
+        },
+        {
+            name: "employeeLastName",
+            type: "input",
+            message: "Please enter employee's last name:"
+        },
+        {
+            name: "roleName",
+            type: "list",
+            message: "What role does this employee belongs to?",
+            choices: roleList
+        }
+
+
+    ]).then(function (response) {
+        let firstName = response.employeeFirstName
+        let lastName = response.employeeLastName
+        let role = response.roleName
+
+        db.query(`INSERT INTO employee (first_name, last_name, role_id)
+        VALUES ("${firstName}", "${lastName}", "${role}")`, function(err, response){
+            if (err){
+                console.log(err)
+                start();
+                return
+            }
+            viewAllEmployees(),
+            start();
+        })
+    })
+})
+};
 
 start()

@@ -9,7 +9,9 @@
 * [Links](#links)
 
 ## [Description](#table-of-contents)
-This project was built as an interface called Content Management Systems (CMS), that allows users to view and interact with information stored in the database. This is a command-line application to manage a fictitious company's employee database, using Node.js, Inquirer, and MySQL. The user is able view and manage the departments, roles, and employees in the company, and then organize and plan their business.
+This project was built as an interface called Content Management Systems (CMS), that allows users to view and interact with information stored in a database. This is a command-line application to manage a fictitious company's employee database, using Node.js, Inquirer, and MySQL. The user is able view and manage the departments, roles, and employees in the company, and then organize and plan their business.
+
+![demo](./Screenshot%202023-08-18%20at%206.21.50%20PM.png)
 
 ## [Installation](#table-of-contents)
 For installing the application you will need to have Node.js, Inquirer version 8.2.4, and MySQL. To get started you can run `npm install` in the integrated terminal to install packages. 
@@ -24,4 +26,4 @@ If you have any questions about the functionality of the application or installa
 N/A
 
 ## [Links](#table-of-contents)
-[Video Walkthrough](xxxxxx)
+[Video Walkthrough](https://watch.screencastify.com/v/AZnVPB4vdLHVogEenChs)
